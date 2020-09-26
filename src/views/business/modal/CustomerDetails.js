@@ -11,9 +11,9 @@ import TableCell from '@material-ui/core/TableCell'
 import TableBody from '@material-ui/core/TableBody'
 import moment from "moment";
 
-function OrderDetails(props) {
+function CustomerDetails(props) {
   const dispatch = useDispatch()
-  const orderDetailsDialog = useSelector(({BusinessApp}) => BusinessApp.business === undefined ? '' :BusinessApp.business.orderDetailsDialog)
+  const customerDetailsDialog = useSelector(({BusinessApp}) => BusinessApp.business === undefined ? '' :BusinessApp.business.customerDetailsDialog)
 
   const [data, setData] = useState([])
 
@@ -21,16 +21,16 @@ function OrderDetails(props) {
     /**
      * After Dialog Open
      */
-    if (orderDetailsDialog.data) {
-      console.log("orderDetail",orderDetailsDialog.data);
-      setData(orderDetailsDialog.data)
+    if (customerDetailsDialog.data) {
+      console.log("orderDetail",customerDetailsDialog.data);
+      setData(customerDetailsDialog.data)
     }
 
-  }, [orderDetailsDialog.props === undefined? '':orderDetailsDialog.props.open, orderDetailsDialog.data])
+  }, [customerDetailsDialog.props === undefined? '':customerDetailsDialog.props.open, customerDetailsDialog.data])
   
 
   function closeComposeDialog () {
-    dispatch(Actions.closeOrderDetailsDialog())
+    dispatch(Actions.closeCustomerDetailsDialog())
   }
 
   return (
@@ -40,13 +40,12 @@ function OrderDetails(props) {
             paper: 'm-24',
             
           }}
-          {...orderDetailsDialog.props}
+          {...customerDetailsDialog.props}
           onClose={closeComposeDialog}
           fullWidth
           scroll = 'body'
           maxWidth="md"
       >
-
         <AppBar position="static" elevation={1}>
           <Toolbar className="flex w-full" >
             <Typography variant="subtitle1" color="inherit">
@@ -60,23 +59,22 @@ function OrderDetails(props) {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell><b>Order Status</b></TableCell>
-                  <TableCell><b>Payment Status</b></TableCell>
-                  <TableCell><b>Order Location</b></TableCell>
-                  <TableCell><b>Order Amount</b></TableCell>
-                  <TableCell><b>Order Date</b></TableCell>
+                  <TableCell><b>Customer Profile Pic</b></TableCell>
                   <TableCell><b>Customer Name</b></TableCell>
+                  <TableCell><b>Dial Code</b></TableCell>
+                  <TableCell><b>Mobile Number</b></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {data && data.map(row => (
                     <TableRow key={row._id}>
-                      <TableCell>{row.orderStatus}</TableCell>
-                      <TableCell>{row.paymentStatus}</TableCell>
-                      <TableCell>{row.location.name}</TableCell>
-                      <TableCell>{row.totalAmount}</TableCell>
-                      <TableCell>{moment((row.orderDate)).format('MMMM Do YYYY, h:mm:ss a')}</TableCell>
-                      <TableCell>{row.customerId[0].name}</TableCell>
+                      {/* <TableCell>Hello</TableCell> */}
+                      <TableCell><img src= "https://img.icons8.com/material-sharp/24/000000/user.png" style={{height:'50px' ,width:"50px"}} className="c-avatar-img" alt="" /></TableCell>
+                      <TableCell>{row.name}</TableCell>
+                      <TableCell>{row.dial_code}</TableCell>
+                      <TableCell>{row.mobile_no}</TableCell>
+                      {/* <TableCell>{moment((row.orderDate)).format('MMMM Do YYYY, h:mm:ss a')}</TableCell>
+                      <TableCell>{row.customerId[0].name}</TableCell> */}
                     </TableRow>
                 ))}
               </TableBody>
@@ -87,4 +85,4 @@ function OrderDetails(props) {
   )
 }
 
-export default OrderDetails
+export default CustomerDetails

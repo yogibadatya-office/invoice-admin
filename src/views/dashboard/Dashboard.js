@@ -86,7 +86,7 @@ const Dashboard = () => {
                   <tr>
                     <td>
                       <div className="c-avatar">
-                        <img src={order.customerId[0]=== undefined? '':(order.customerId[0].profile_pic == ""? "https://img.icons8.com/material-sharp/24/000000/user.png": localUrl+order.customerId[0].profile_pic)} className="c-avatar-img" alt="" />                        
+                        <img src= "https://img.icons8.com/material-sharp/24/000000/user.png" className="c-avatar-img" alt="" />                        
                         {/* <img src="https://img.icons8.com/material-sharp/24/000000/user.png"/> */}
                         <span className="c-avatar-status bg-success"></span>
                       </div>

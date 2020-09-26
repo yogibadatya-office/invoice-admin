@@ -26,7 +26,7 @@ export function addServiceCateogry (data){
   return (dispatch) =>
     request.then((response) => {
         console.log("response of add service", response);
-        dispatch(showMessage({message: 'Add Service Category !!'}))
+        dispatch(showMessage({message: 'Service Category Added Successfully !!'}))
 
         return dispatch({
           type: ADD_CATEGORY,

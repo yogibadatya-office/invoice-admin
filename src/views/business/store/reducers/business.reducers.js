@@ -8,6 +8,13 @@ const initialState = {
           open: false
         },
         data: null
+      },
+      customerDetailsDialog: {
+        type: 'new',
+        props: {
+          open: false
+        },
+        data: null
       }
 }
 
@@ -46,11 +53,37 @@ const customerReducer = function (state = initialState, action) {
               }
             }
           }
-          case Actions.CLOSE_ORDER_DETAILS_DIALOG: {
+        case Actions.CLOSE_ORDER_DETAILS_DIALOG: {
       
             return {
               ...state,
               orderDetailsDialog: {
+                type: 'edit',
+                props: {
+                  open: false
+                },
+                data: action.data
+              }
+            }
+          }
+          case Actions.OPEN_CUSTOMER_DETAILS_DIALOG: {
+            return {
+              ...state,
+              customerDetailsDialog: {
+                type: 'edit',
+                props: {
+                  open: true
+                },
+                data: action.data
+      
+              }
+            }
+          }
+        case Actions.CLOSE_CUSTOMER_DETAILS_DIALOG: {
+      
+            return {
+              ...state,
+              customerDetailsDialog: {
                 type: 'edit',
                 props: {
                   open: false

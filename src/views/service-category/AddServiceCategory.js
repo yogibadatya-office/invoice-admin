@@ -34,6 +34,7 @@ import CIcon from '@coreui/icons-react'
 import reducer from './store/reducers'
 import withReducer from '../../store/withReducer'
 import { useDispatch, useSelector } from 'react-redux'
+import {  useHistory } from 'react-router-dom'
 import { useForm } from '../../@fuse/hooks'
 import {showMessage} from '../../store/actions/fuse'
 import * as Actions from './store/actions'
@@ -41,46 +42,32 @@ import _ from 'lodash'
 
 const AddServiceCategory = () => {
   const [collapsed, setCollapsed] = React.useState(true)
+  let history = useHistory();
   const [showElements, setShowElements] = React.useState(true)
   const [upload,setUpload] = useState()
   const dispatch = useDispatch()
   const { form, handleChange, setForm, setInForm } = useForm({
     serviceCategoryName: '',   
   })
-  function handleSubmit(event) {
-    console.log("form submit");
-    // console.log("form email",form.email);
-    // console.log("form name",form.name);
-
-    
+  function handleSubmit(event) {  
     event.preventDefault()
         dispatch(Actions.addServiceCateogry({
           // _id: creditSettingDialog.data.id,
           serviceCategoryName: form.serviceCategoryName,
           serviceCategoryIcon: form.serviceCategoryIcon,
         }))
-    // }
-
+        history.push('/serviceCategory/serviceCategoryList')
   }
   const handleUploadChange = (e, field) => {
     const file = e.target.files[0]
-    // console.log("fileee",file);
-    // if (!file) {
-    //   return
-    // }
     if (!file) {
       dispatch(showMessage({message: 'Please select image.'}))
-      setUpload(false)
-      // this.setState({ message: 'Please select valid image.' });
-
-      // dispatch({ message: 'Please select image.' });
       return false;
     }
    
     if (!file.name.match(/\.(jpg|jpeg|png|gif)$/)) {
       dispatch(showMessage({message: 'Please select valid image.'}))
       setUpload(false)
-      // this.setState({ message: 'Please select valid image.' });
       return false;
     }
     const fd = new FormData();
@@ -104,28 +91,7 @@ const AddServiceCategory = () => {
 
   return (
     <>    
-      <CRow>
-        {/* <CCol xs="12" sm="6">
-          <CCard>
-            <CCardHeader>
-              Form
-              <small> validation feedback</small>
-            </CCardHeader>
-            <CCardBody>
-              <CFormGroup>
-                <CLabel htmlFor="inputIsValid">Input is valid</CLabel>
-                <CInput valid id="inputIsValid" />
-                <CValidFeedback>Cool! Input is valid</CValidFeedback>
-              </CFormGroup>
-              <CFormGroup>
-                <CLabel htmlFor="inputIsInvalid">Input is invalid</CLabel>
-                <CInput invalid id="inputIsInvalid" />
-                <CInvalidFeedback>Houston, we have a problem...</CInvalidFeedback>
-              </CFormGroup>
-            </CCardBody>
-          </CCard>
-        </CCol>
-         */}
+      <CRow>        
         <CCol xs="12" >
           <CCard>
             <CCardHeader>
@@ -148,7 +114,7 @@ const AddServiceCategory = () => {
                   <CLabel htmlFor="inputWarning2i2">Service Category Icon</CLabel>
                   <CInput
                 accept="image/*"
-                className="hidden"
+                className="form-control"
                 id="inputWarning2i2" required
                 type="file"
                 onChange={(e) => handleUploadChange(e, 'serviceCategoryIcon')}
@@ -161,7 +127,9 @@ const AddServiceCategory = () => {
                 <CFormGroup className="form-actions">
                 <button type="button" onClick={handleSubmit}
           //  disabled={!canBeSubmitted()} 
-          className="btn btn-primary">Save </button>
+          className="btn btn-primary"
+          disabled={form.serviceCategoryName === "" || form.serviceCategoryIcon === undefined? true : false}
+          >Save </button>
                 </CFormGroup>
               </CForm>
             </CCardBody>

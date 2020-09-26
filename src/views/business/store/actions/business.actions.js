@@ -8,7 +8,8 @@ export const GET_CUSTOMERS = '[USER APP] GET_CUSTOMERS'
 
 export const OPEN_ORDER_DETAILS_DIALOG = '[USER] OPEN_ORDER_DETAILS_DIALOG'
 export const CLOSE_ORDER_DETAILS_DIALOG = '[USER] CLOSE_ORDER_DETAILS_DIALOG'
-
+export const OPEN_CUSTOMER_DETAILS_DIALOG = '[USER] OPEN_CUSTOMER_DETAILS_DIALOG'
+export const CLOSE_CUSTOMER_DETAILS_DIALOG = '[USER] CLOSE_CUSTOMER_DETAILS_DIALOG'
 
 export function editProfile (data) {
   // console.log(data);
@@ -119,6 +120,31 @@ export function openOrderDetailsDialog (data) {
 export function closeOrderDetailsDialog (data) {
   return {
     type: CLOSE_ORDER_DETAILS_DIALOG,
+    data
+  }
+}
+
+export function openCustomerDetailsDialog (data) {
+  let data1 ={
+    businessId :  data,
+  }
+  const request = axios.post(`${constants.API_URL}/getCustomersByBusinessId`,data1)
+
+  return (dispatch) =>
+  request.then((response) => {
+    return dispatch({
+      type: OPEN_CUSTOMER_DETAILS_DIALOG,
+      data: response.data.data,
+    })
+
+  }).catch(error => {
+    console.log(error)
+  })
+}
+
+export function closeCustomerDetailsDialog (data) {
+  return {
+    type: CLOSE_CUSTOMER_DETAILS_DIALOG,
     data
   }
 }

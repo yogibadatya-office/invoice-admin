@@ -20,6 +20,7 @@ import {
 import * as Actions from './store/actions'
 import reducer from './store/reducers'
 import OrderDetails from './modal/OrderDetails'
+import CustomerDetails from "./modal/CustomerDetails";
 
 const BusinessDetails = () => {
   const dispatch = useDispatch()
@@ -104,6 +105,13 @@ const BusinessDetails = () => {
       _style: { width: '20%' },
       sorter: false,
       filter: false
+    },
+    {
+      key: 'customerList',
+      // label: '',
+      _style: { width: '20%' },
+      sorter: false,
+      filter: false
     }
   ]
 
@@ -111,6 +119,7 @@ const BusinessDetails = () => {
   return (
     <>
       <OrderDetails/>
+      <CustomerDetails/>
     <CRow>
       <CCol >
         <CCard>
@@ -186,6 +195,14 @@ const BusinessDetails = () => {
                     <td> 
                       <CButton size="sm" color="primary"onClick={ev => dispatch(Actions.openOrderDetailsDialog(item._id))} className="ml-1">
                             See Order Details
+                          </CButton>                     
+                    </td>
+                  ),
+                  'customerList':
+                  (item) => (
+                    <td> 
+                      <CButton size="sm" color="primary"onClick={ev => dispatch(Actions.openCustomerDetailsDialog(item._id))} className="ml-1">
+                            See Customer Details
                           </CButton>                     
                     </td>
                   ),
